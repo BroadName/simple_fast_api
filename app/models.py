@@ -9,7 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncAttrs, create_async_engine, async_sessio
 
 POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "secret")
 POSTGRES_USER = os.getenv("POSTGRES_USER", "postgres")
-POSTGRES_DB = os.getenv("POSTGRES_DB", "posts")
+POSTGRES_DB = os.getenv("POSTGRES_DB", "advs")
 POSTGRES_HOST = os.getenv("POSTGRES_HOST", "localhost")
 POSTGRES_PORT = os.getenv("POSTGRES_PORT", "5431")
 
@@ -39,7 +39,7 @@ class Advertisement(Base):
     created_date: [datetime.datetime] = mapped_column(DateTime, server_default=func.now())
 
     @property
-    def json(self):
+    def dict(self):
         return {
             "id": self.id,
             "author": self.author,
@@ -47,8 +47,3 @@ class Advertisement(Base):
             "description": self.description,
             "price": self.price
             }
-
-
-async def init_orm():
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
