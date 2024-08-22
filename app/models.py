@@ -36,7 +36,7 @@ class Advertisement(Base):
     description: Mapped[str] = mapped_column(Text)
     price: Mapped[Decimal] = mapped_column(DECIMAL(precision=10, scale=2))
     author: Mapped[str] = mapped_column(String(100))
-    created_date: [datetime.datetime] = mapped_column(DateTime, server_default=func.now())
+    created_date: Mapped[datetime.datetime] = mapped_column(DateTime, server_default=func.now())
 
     @property
     def dict(self):
@@ -45,5 +45,10 @@ class Advertisement(Base):
             "author": self.author,
             "title": self.title,
             "description": self.description,
-            "price": self.price
+            "price": self.price,
+            "created_date": self.created_date
             }
+
+
+ORM_OBJECT = Advertisement
+ORM_CLS = type[Advertisement]
