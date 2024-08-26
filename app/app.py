@@ -1,5 +1,6 @@
 import fastapi
 
+from typing import List
 from description import DESCRIPTION
 from models import Advertisement
 from schema import CreateAdv, AdvId, GetAdv, UpdateAdv, StatusResponse
@@ -14,6 +15,13 @@ app = fastapi.FastAPI(
     description=DESCRIPTION,
     lifespan=lifespan
 )
+
+
+@app.get("/v1/advs/search", response_model=List[GetAdv])
+async def search_advs(field: str, search_word: str, session: SessionDependency):
+    advs = await crud.get_search_items(session, Advertisement, field, search_word)
+    results = [adv.dict for adv in advs if adv is not None]
+    return results
 
 
 @app.get("/v1/advs/{adv_id}", response_model=GetAdv)
