@@ -1,4 +1,5 @@
 import datetime
+import uuid
 
 from typing import Literal
 
@@ -9,7 +10,7 @@ class StatusResponse(BaseModel):
     status: Literal["ok", "deleted"]
 
 
-class AdvId(BaseModel):
+class ItemId(BaseModel):
     id: int
 
 
@@ -20,6 +21,7 @@ class GetAdv(BaseModel):
     description: str
     price: float
     created_date: datetime.datetime
+    user_id: int
 
 
 class CreateAdv(BaseModel):
@@ -34,3 +36,29 @@ class UpdateAdv(BaseModel):
     author: str | None = None
     description: str | None = None
     price: float | None = None
+
+
+class BaseUser(BaseModel):
+    name: str
+    password: str
+
+
+class CreateUser(BaseUser):
+    pass
+
+
+class Login(BaseUser):
+    pass
+
+
+class LoginResponse(BaseModel):
+    token: uuid.UUID
+
+
+class GetUser(BaseUser):
+    password: str | None = None
+
+
+class UpdateUser(BaseModel):
+    name: str | None = None
+    password: str | None = None

@@ -28,7 +28,7 @@ async def get_search_items(session: Session, orm_cls: ORM_CLS, field: str, searc
     filter_expr = getattr(orm_cls, field).like(f"%{search_word}%")
     stmt = select(orm_cls).filter(filter_expr)
     results = await session.execute(stmt)
-    orm_objects = results.scalars().all()
+    orm_objects = results.unique().scalars().all()
     if not orm_objects:
         raise HTTPException(status_code=404, detail='There are no matches')
     return orm_objects
