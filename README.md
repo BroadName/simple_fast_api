@@ -1,4 +1,4 @@
-## REST API (backend) для сайта объявлений на aiohttp
+## REST API (backend) для сайта объявлений купли/продажи на FastAPI
 ### 1. Для запуска проекта собираем контейнер:
 ```bash
 docker-compose up app
